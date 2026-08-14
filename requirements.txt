@@ -1,0 +1,8 @@
+streamlit
+python-dotenv
+requests
+langchain-community
+langchain-text-splitters
+pypdf
+scikit-learn
+numpy
