@@ -14,8 +14,21 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 # ---------- Setup ----------
 load_dotenv()
 
-GATEWAY_URL = os.getenv("GATEWAY_URL")
-GATEWAY_API_KEY = os.getenv("GATEWAY_API_KEY")
+
+def get_secret(name: str):
+    # Locally this comes from .env; on Streamlit Cloud it comes from
+    # the Secrets manager, which may not always populate os.environ.
+    value = os.getenv(name)
+    if value:
+        return value
+    try:
+        return st.secrets.get(name)
+    except Exception:
+        return None
+
+
+GATEWAY_URL = get_secret("GATEWAY_URL")
+GATEWAY_API_KEY = get_secret("GATEWAY_API_KEY")
 
 st.set_page_config(page_title="Talk to my documents", page_icon="📄")
 st.title("📄 Talk to my documents")
